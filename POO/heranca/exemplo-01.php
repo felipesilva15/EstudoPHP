@@ -1,27 +1,23 @@
 <?php
 
-// Métodos estáticos
+// Classe mais genérica com as coisas em comum
 class Documento{
     private $numero;
 
-    // Método para definir o CPF
     public function setNumero($numero){
-        // Valida o CPF e lança um erro caso seja inválido
-        if (!Documento::validarCPF($numero)){
-            throw new Exception("O CPF informado é inválido", 1);
-        }
-
         $this->numero = $numero;
     }
 
-    // Mpetodo para retornar o CPF
     public function getNumero():string{
         return $this->numero;
     }
+}
 
-    // Método estático para validar o CPF
-    public static function validarCPF($cpf):bool{
-        // Valida se o CPF foi informado
+// Classe mais específica, mas que tem as mesmas coisas que a classe pai
+class CPF extends Documento{
+    public function validar():bool{
+        $cpf = $this->getNumero();
+
         if(empty($cpf)) {
             return false;
         }
@@ -68,18 +64,12 @@ class Documento{
     }
 }
 
-// Instancia a classe Documento no objeto CPF
-$cpf = new Documento();
+$doc = new CPF();
 
-$meuCpf = "66974259034";
+$doc->setNumero("44137763801");
 
-// Define o CPF
-$cpf->setNumero($meuCpf);
+var_dump($doc->validar());
 
-// Exibe na tela o CPF
-var_dump($cpf->getNumero());
-
-// Valida se o CPF é válido
-var_dump(Documento::validarCPF($meuCpf));
+echo "<br>".$doc->getNumero();
 
 ?>

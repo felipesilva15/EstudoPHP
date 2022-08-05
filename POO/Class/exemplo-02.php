@@ -1,5 +1,6 @@
 <?php
 
+// Atributos e métodos
 class Carro{
     // Cria os atributos da classe, no qual são privados(Só são acessados dentro da classe)
     private $modelo, $motor, $ano;
