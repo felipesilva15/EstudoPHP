@@ -1,7 +1,7 @@
 <?php
 
 // Realiza a conexão com o BD
-$conn = new mysqli("localhost", "root", "Master@12345f", "dbphp7");
+$conn = new mysqli("localhost", "sa", "spy", "dbphp7");
 
 // Caso ocorra um erro, exibe-o na tela
 if ($conn->connect_error){
