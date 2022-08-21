@@ -42,6 +42,13 @@ class Usuario {
         $this->setDtCadastro(new DateTime($data["dtCadastro"]));
     }
 
+    public function unsetData(){
+        $this->setPkId(0);
+        $this->setDsLogin("");
+        $this->setDsSenha("");
+        $this->setDtCadastro(new DateTime());
+    }
+
     public function loadById($id){
         $sql = new Sql();
 
@@ -103,6 +110,29 @@ class Usuario {
             throw new Exception("Erro ao salvar dados na base de dados, tente novamente.", 1);
             
         }
+    }
+
+    public function update($login, $senha){
+        $this->setDsLogin($login);
+        $this->setDsSenha($senha);
+
+        $sql = new Sql();
+
+        $sql->prepareQuery("UPDATE tb_usuarios SET dsLogin = :LOGIN, dsSenha = :SENHA WHERE pkID = :ID", array(
+            ":LOGIN"=>$this->getDsLogin(),
+            ":SENHA"=>$this->getDsSenha(),
+            ":ID"=>$this->getPkId(),
+        ));
+    }
+
+    public function delete(){
+        $sql = new Sql();
+
+        $sql->select("DELETE FROM tb_usuarios WHERE pkId = :ID", array(
+            ":ID"=>$this->getPkId()
+        ));
+
+        $this->unsetData();
     }
 
     public function __construct($login = "", $senha = ""){

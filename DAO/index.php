@@ -33,7 +33,23 @@ $usuario = new Usuario();
 
 
 // Insere um usuário no BD
-$usuario = new Usuario("felipe.santos", "123@456");
+// $usuario = new Usuario("felipe.santos", "123@456");
 
-$usuario->insert();
+// $usuario->insert();
+// echo $usuario;
+
+
+
+// Altera um usuário no BD
+// $usuario->loadById(10);
+// $usuario->update("aluno", "default");
+
+// echo $usuario;
+
+
+
+// Deleta um usuário no BD
+$usuario->loadById(9);
+$usuario->delete();
+
 echo $usuario;
