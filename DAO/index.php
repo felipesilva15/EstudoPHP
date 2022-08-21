@@ -2,12 +2,8 @@
 
 require_once("config.php");
 
-$sql = new Sql;
+$usuario = new Usuario;
 
-$usuarios = $sql->select("SELECT * FROM tb_usuarios");
+$usuario->loadById(4);
 
-if (!isset($usuarios) || gettype($usuarios) != "array"){
-    $usuarios = array();
-}
-
-echo json_encode($usuarios);
+echo $usuario;
