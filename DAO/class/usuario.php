@@ -36,9 +36,9 @@ class Usuario {
     }
 
     public function loadById($id){
-        $sql = new Sql;
+        $sql = new Sql();
 
-        $data = $sql->select("SELECT * FROM tb_usuarios WHERE :ID", array(
+        $data = $sql->select("SELECT * FROM tb_usuarios WHERE pkId = :ID", array(
             ":ID"=>$id
         ));
 
@@ -49,6 +49,40 @@ class Usuario {
             $this->setDsLogin($row["dsLogin"]);
             $this->setDsSenha($row["dsSenha"]);
             $this->setDtCadastro(new DateTime($row["dtCadastro"]));
+        }
+    }
+
+    public static function getList():array{
+        $sql = new Sql();
+
+        return ($sql->select("SELECT * FROM tb_usuarios ORDER BY dsLogin"));
+    }
+
+    public static function searchByLogin($login):array{
+        $sql = new Sql();
+
+        return ($sql->select("SELECT * FROM tb_usuarios WHERE dsLogin LIKE :LOGIN ORDER BY dsLogin", array(
+            ":LOGIN"=>"%$login%"
+        )));
+    }
+
+    public function login($login, $senha){
+        $sql = new Sql();
+
+        $data = $sql->select("SELECT * FROM tb_usuarios WHERE dsLogin = :LOGIN AND dsSenha = :SENHA", array(
+            ":LOGIN"=>$login,
+            ":SENHA"=>$senha
+        ));
+
+        if (isset($data[0])){
+            $row = $data[0];
+
+            $this->setPkId($row["pkId"]);
+            $this->setDsLogin($row["dsLogin"]);
+            $this->setDsSenha($row["dsSenha"]);
+            $this->setDtCadastro(new DateTime($row["dtCadastro"]));
+        }else{
+            throw new Exception("Login e/ou senha inválidos", 1);
         }
     }
 
