@@ -2,7 +2,7 @@
 
 require_once("config.php");
 
-$usuario = new Usuario;
+$usuario = new Usuario();
 
 // Carrega um usuário pelo ID
 // $usuario->loadById(4);
@@ -26,6 +26,14 @@ $usuario = new Usuario;
 
     
 // Carrega um usuário utilizando um login e senha
-$usuario->login("felipe.silva", "123");
+// $usuario->login("felipe.silva", "123");
 
+// echo $usuario;
+
+
+
+// Insere um usuário no BD
+$usuario = new Usuario("felipe.santos", "123@456");
+
+$usuario->insert();
 echo $usuario;

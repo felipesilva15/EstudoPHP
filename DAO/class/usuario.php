@@ -35,6 +35,13 @@ class Usuario {
         $this->dtCadastro = $dtCadastro;
     }
 
+    public function setData($data){
+        $this->setPkId($data["pkId"]);
+        $this->setDsLogin($data["dsLogin"]);
+        $this->setDsSenha($data["dsSenha"]);
+        $this->setDtCadastro(new DateTime($data["dtCadastro"]));
+    }
+
     public function loadById($id){
         $sql = new Sql();
 
@@ -45,10 +52,7 @@ class Usuario {
         if (isset($data[0])){
             $row = $data[0];
 
-            $this->setPkId($row["pkId"]);
-            $this->setDsLogin($row["dsLogin"]);
-            $this->setDsSenha($row["dsSenha"]);
-            $this->setDtCadastro(new DateTime($row["dtCadastro"]));
+            $this->setData($row);
         }
     }
 
@@ -77,13 +81,33 @@ class Usuario {
         if (isset($data[0])){
             $row = $data[0];
 
-            $this->setPkId($row["pkId"]);
-            $this->setDsLogin($row["dsLogin"]);
-            $this->setDsSenha($row["dsSenha"]);
-            $this->setDtCadastro(new DateTime($row["dtCadastro"]));
+            $this->setData($row);
         }else{
             throw new Exception("Login e/ou senha inválidos", 1);
         }
+    }
+
+    public function insert(){
+        $sql = new Sql();
+
+        $data = $sql->select("CALL sp_usuarios_insert(:LOGIN, :SENHA)", array(
+            ":LOGIN"=>$this->getDsLogin(),
+            ":SENHA"=>$this->getDsSenha()
+        ));
+
+        if (isset($data[0])){
+            $row = $data[0];
+
+            $this->setData($row);
+        }else{
+            throw new Exception("Erro ao salvar dados na base de dados, tente novamente.", 1);
+            
+        }
+    }
+
+    public function __construct($login = "", $senha = ""){
+        $this->setDsLogin($login);
+        $this->setDsSenha($senha);
     }
 
     public function __toString(){
