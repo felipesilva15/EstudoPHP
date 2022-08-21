@@ -3,6 +3,7 @@
 class Usuario {
     private $pkId, $dsLogin, $dsSenha, $dtCadastro;  
 
+    // Define os métodos de gets e seteres
     public function getPkId():int{
         return $this->pkId;
     }
@@ -35,6 +36,7 @@ class Usuario {
         $this->dtCadastro = $dtCadastro;
     }
 
+    // Realiza os sets nos atributos a partir de um array
     public function setData($data){
         $this->setPkId($data["pkId"]);
         $this->setDsLogin($data["dsLogin"]);
@@ -42,6 +44,7 @@ class Usuario {
         $this->setDtCadastro(new DateTime($data["dtCadastro"]));
     }
 
+    // Limpa os atributos da classe
     public function unsetData(){
         $this->setPkId(0);
         $this->setDsLogin("");
@@ -49,6 +52,7 @@ class Usuario {
         $this->setDtCadastro(new DateTime());
     }
 
+    // Busca um usuário pelo ID
     public function loadById($id){
         $sql = new Sql();
 
@@ -63,12 +67,14 @@ class Usuario {
         }
     }
 
+    // Busca todos os usuários da tabela
     public static function getList():array{
         $sql = new Sql();
 
         return ($sql->select("SELECT * FROM tb_usuarios ORDER BY dsLogin"));
     }
 
+    // Busca um usuário pelo login
     public static function searchByLogin($login):array{
         $sql = new Sql();
 
@@ -77,6 +83,7 @@ class Usuario {
         )));
     }
 
+    // Realiza um login e seta o usuário nos atributos da classe
     public function login($login, $senha){
         $sql = new Sql();
 
@@ -94,6 +101,7 @@ class Usuario {
         }
     }
 
+    // Insere um usuário no BD
     public function insert(){
         $sql = new Sql();
 
@@ -112,6 +120,7 @@ class Usuario {
         }
     }
 
+    // Altera um usuário no BD
     public function update($login, $senha){
         $this->setDsLogin($login);
         $this->setDsSenha($senha);
@@ -125,6 +134,7 @@ class Usuario {
         ));
     }
 
+    // Deleta um usuário do BD
     public function delete(){
         $sql = new Sql();
 
@@ -135,11 +145,13 @@ class Usuario {
         $this->unsetData();
     }
 
+    // Define os atributos da classe ao cria-la 
     public function __construct($login = "", $senha = ""){
         $this->setDsLogin($login);
         $this->setDsSenha($senha);
     }
 
+    // Define um json de retorno ao ser chamado um echo do objeto da classe
     public function __toString(){
         return json_encode(array(
             "pkId"=>$this->getPkId(),
