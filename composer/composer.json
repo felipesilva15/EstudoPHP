@@ -1,0 +1,14 @@
+{
+    "name": "estudo/composer",
+    "description": "Estudo de PHP",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Estudo\\Composer\\": "src/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "monolog/monolog": "1.0.*"
+    }
+}
